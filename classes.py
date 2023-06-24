@@ -4,6 +4,7 @@ from selenium.common.exceptions import NoSuchElementException
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
+import os
 
 class SeleniumBrowser:
     def __init__(self):
@@ -81,8 +82,9 @@ class Steam:
     def update_spreadsheet(self, nome_item, valor, quantidade, data_hora):
 
     # Carrega as credenciais do arquivo JSON
-        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive'] #permite acesso ao sheets e ao drive respectivamente
-        creds = ServiceAccountCredentials.from_json_keyfile_name('credenciais.json', scope) #arquivo json de credenciais
+        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        credentials_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'credenciais.json'))
+        creds = ServiceAccountCredentials.from_json_keyfile_name(credentials_file, scope)
 
     # Autorizar o acesso à planilha
         client = gspread.authorize(creds)
