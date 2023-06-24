@@ -6,18 +6,19 @@ from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime
 import os
 
+
 class SeleniumBrowser:
     def __init__(self):
         self.driver = None
 
-    def open_browser(self):
-        self.driver = webdriver.Chrome()
+    def open_browser(self, c_options):
+        self.driver = webdriver.Chrome(options=c_options)
         return self.driver
 
 class Steam:
-    def __init__(self, site):
+    def __init__(self, site, chrome_options):
         self.site = site
-        self.browser = SeleniumBrowser().open_browser()
+        self.browser = SeleniumBrowser().open_browser(chrome_options)
 
     def search(self, pesquisa):
         self.browser.get(self.site)
