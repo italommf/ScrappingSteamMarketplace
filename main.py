@@ -14,7 +14,7 @@ os.system("cls")
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 DEFAULT_PAGE = 1
-db_file = 'steam.db'
+db_file = 'steam_bd.db'
 
 steam = Steam(f'https://steamcommunity.com/market/search?category_730_ItemSet%5B0%5D=any&category_730_ProPlayer%5B0%5D=any&category_730_StickerCapsule%5B0%5D=any&category_730_TournamentTeam%5B0%5D=any&category_730_Weapon%5B0%5D=any&category_730_StickerCategory%5B0%5D=tag_TeamLogo&category_730_StickerCategory%5B1%5D=tag_Tournament&category_730_Tournament%5B0%5D=tag_Tournament21&appid=730#p{DEFAULT_PAGE}_default_desc', chrome_options=chrome_options, db_file=db_file)
 steam.search('holo')
