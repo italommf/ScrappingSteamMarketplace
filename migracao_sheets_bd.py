@@ -2,7 +2,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import sqlite3
 import os
-
+from bd import BancoDeDados
 
 def migrar_dados():
     try:
@@ -15,48 +15,20 @@ def migrar_dados():
         client = gspread.authorize(creds)
         planilha = client.open('Paris 2023').sheet1  # Abre a planilha de nome Paris 2023 na pasta raiz do Google Drive
 
-        print('Autorizei a planilha')
-
         # Conectar ao banco de dados
-        db_file = 'dados.db'
+        db_file = 'steam_bd.db'
         conn = sqlite3.connect(db_file)
         cursor = conn.cursor()
 
-        print('Conectei ao banco de dados')
-
-        # Criar tabela no banco de dados, se ainda não existir
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS itens (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nome TEXT,
-                valor TEXT,
-                quantidade TEXT,
-                data TEXT,
-                hora TEXT,
-                data_hora TEXT
-            )
-        ''')
-
-        print('Criei a tabela')
+        # Correção: Remova a linha self.cursor.execute('''
+        BancoDeDados.criar_tabela(cursor)  # Correção: Chame o método diretamente
 
         conn.commit()
-
-        print('Comitei')
 
         # Ler os dados do Google Sheets e inserir no banco de dados
         dados = planilha.get_all_values()
-        for linha in dados[1:]:  # Ignorar o cabeçalho da planilha
-            nome = linha[0]
-            valor = linha[1]
-            quantidade = linha[2]
-            data = linha[4]
-            hora = linha[5]
-            data_hora = linha[3]
-            cursor.execute('INSERT INTO itens (nome, valor, quantidade, data, hora, data_hora) VALUES (?, ?, ?, ?, ?, ?)',
-                           (nome, valor, quantidade, data, hora, data_hora))
+        BancoDeDados.adicionar_dados(cursor, dados)
         conn.commit()
-
-        print('Terminei o for do Sheets')
 
     except Exception as e:
         print(f'Ocorreu um erro durante a migração dos dados: {str(e)}')
@@ -67,7 +39,6 @@ def migrar_dados():
             cursor.close()
         if conn:
             conn.close()
-
 
 if __name__ == '__main__':
     migrar_dados()

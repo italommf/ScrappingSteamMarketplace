@@ -1,5 +1,6 @@
 from steam import Steam
 from classes import Utils
+#from classes import Graficos
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import os

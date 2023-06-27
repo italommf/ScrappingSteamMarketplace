@@ -34,3 +34,7 @@ class BancoDeDados:
     def fechar_conexao(self):
         self.cursor.close()
         self.conn.close()
+
+    def obter_dados(self, filtro_nome):
+        self.cursor.execute('SELECT valor, data FROM itens WHERE nome = ?', (filtro_nome,))
+        return self.cursor.fetchall()
