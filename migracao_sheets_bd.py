@@ -43,7 +43,6 @@ if __name__ == '__main__':
     migrar_dados()
 
 
-
 '''import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import sqlite3
