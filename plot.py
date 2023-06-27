@@ -14,27 +14,34 @@ class Graficos:
             print("Não há dados disponíveis para gerar o gráfico.")
             return
 
-        fig, ax = plt.subplots()
+        ids = []
+        valores = []
+        data_horas = []
 
         for linha in dados:
-            nome = linha[0]  # Coluna "nome"
-            valor = float(linha[1].replace('$', '').replace(' USD', ''))  # Coluna "valor" convertida para float
-            hora = linha[2]  # Coluna "hora"
+            id = linha[0]  # Coluna "id"
+            valor = float(linha[2].replace('$', '').replace(' USD', ''))  # Coluna "valor" convertida para float
+            data_hora = linha[3]  # Coluna "data_hora"
 
-            print(f"nome: {nome}, valor: {valor}, hora: {hora}")
+            print(f"id: {id}, valor: {valor}, data_hora: {data_hora}")
 
-            ax.plot(hora, valor, label=nome)
+            ids.append(id)
+            valores.append(valor)
+            data_horas.append(data_hora)
 
-        ax.set_xlabel('Hora')
+        fig, ax = plt.subplots()
+
+        ax.plot(ids, valores, label=filtro_nome)
+
+        ax.set_xlabel('Data e Hora')
         ax.set_ylabel('Valor')
-        ax.set_title(f'Gráfico de Linha - {filtro_nome}')
+        ax.set_title('Gráfico de Linha')
 
         ax.legend()
-        plt.xticks(rotation=45)  # Rotaciona os rótulos do eixo X para melhor legibilidade
+        plt.xticks(ids, data_horas, rotation=45)  # Rotaciona e exibe as datas e horas no eixo X
 
         plt.show()
 
         banco_dados.fechar_conexao()
-
 
 Graficos.gerar_grafico_linha("Sticker | FURIA (Holo) | Paris 2023")  # precisa do nome completo

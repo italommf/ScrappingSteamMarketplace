@@ -36,6 +36,6 @@ class BancoDeDados:
         self.conn.close()
 
     def obter_dados(self, filtro_nome):
-        self.cursor.execute('SELECT nome, valor, hora FROM itens WHERE nome = ?', (filtro_nome,))
+        self.cursor.execute('SELECT id, nome, valor, hora FROM itens WHERE nome = ?', (filtro_nome,))
         return self.cursor.fetchall()
    
