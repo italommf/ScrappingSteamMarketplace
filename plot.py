@@ -1,9 +1,9 @@
 from bd import BancoDeDados
 import os
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
+import mplcursors
 
-class Graficos:    
-    
+class Graficos:
     @staticmethod
     def gerar_grafico_linha(filtro_nome):
         caminho_banco_dados = os.path.abspath("steam_bd.db")
@@ -39,6 +39,9 @@ class Graficos:
 
         ax.legend()
         plt.xticks(ids, data_horas, rotation=45)  # Rotaciona e exibe as datas e horas no eixo X
+
+        cursor = mplcursors.cursor(ax)
+        cursor.connect("add", lambda sel: sel.annotation.set_text(f"Valor: {valores[int(sel.target.index)]}"))
 
         plt.show()
 
