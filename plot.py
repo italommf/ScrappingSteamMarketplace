@@ -1,6 +1,6 @@
 from bd import BancoDeDados
 import os
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 
 class Graficos:    
     
